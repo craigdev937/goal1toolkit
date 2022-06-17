@@ -39,11 +39,39 @@ class UserClass {
             next(error);
         }
     };
+
+    Login = async (req, res, next) => {
+        const { email, password } = req.body;
+        try {
+            const user = await UserModel.findOne({email});
+            if (user && (await bcrypt.compare(password, user.password))) {
+                res.json({
+                    _id: user.id, name: user.name,
+                    email: user.email,
+                    token: generateToken(user._id)
+                });
+            };
+        } catch (error) {
+            res.status(401).json({msg: error.message});
+            next(error);
+        }
+    };
+
+    GetMe = async (req, res, next) => {
+        try {
+            const { _id, name, email } = 
+                await UserModel.findById(req.user.id);
+            res.status(200).json({
+                id: _id, name, email
+            });
+        } catch (error) {
+            res.status(401).json({msg: error.message});
+            next(error);
+        }
+    };
 };
 
 export const USER = new UserClass();
-
-
 
 
 
