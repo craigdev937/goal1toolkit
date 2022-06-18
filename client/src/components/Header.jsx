@@ -1,6 +1,10 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaSignInAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 
 export const Header = () => {
+    const navigate = useNavigate();   
+
     return (
         <React.Fragment>
             <h1>Header</h1>
