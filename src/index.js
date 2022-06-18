@@ -5,6 +5,7 @@ import logger from "morgan";
 import mongoose from "mongoose";
 import { MidError } from "./middleware/ErrorMid.js";
 import { UserRoute } from "./routes/UserRoute.js";
+import { GoalRoute } from "./routes/GoalRoute.js";
 
 (async () => {
     await mongoose.connect(process.env.MONGO_URI)
@@ -30,6 +31,7 @@ import { UserRoute } from "./routes/UserRoute.js";
     app.use(express.json());
     app.use(logger("dev"));
     app.use("/api/users", UserRoute);
+    app.use("/api/goals", GoalRoute);
 
     // Error Handling and Port.
     app.use(MidError.notFound);
